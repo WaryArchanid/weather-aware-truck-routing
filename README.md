@@ -404,6 +404,21 @@ weather-aware-truck-routing/
 - Additional forecast providers and fallback mechanisms.
 - Deployment monitoring and observability.
 
+### Weather API Rate Limits
+
+The application uses the public Open-Meteo API for weather forecasts.
+
+The public API is subject to request quotas and rate limits. In shared hosting environments, requests may be affected by outbound IP sharing and provider-side usage restrictions.
+
+When the provider returns HTTP 429 (Too Many Requests), the application displays an appropriate error instead of treating unavailable weather data as safe conditions.
+
+For production deployments, the following improvements are recommended:
+
+- Introduce shared caching for frequently requested checkpoint coordinates and forecast periods.
+- Implement controlled retries for transient rate-limit responses.
+- Consider a dedicated weather API subscription for predictable usage and availability.
+- Monitor provider usage and implement appropriate fallback handling.
+
 ## Application Screenshots
 
 ### Main Dashboard
