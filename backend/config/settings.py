@@ -137,8 +137,9 @@ NOMINATIM_USER_AGENT = os.getenv(
     "WeatherAwareTruckRoutingAssessment/1.0",
 )
 
-OPEN_METEO_URL = os.getenv("OPEN_METEO_URL")
-MAX_FORECAST_DISTANCE_SECONDS = int(os.getenv("MAX_FORECAST_DISTANCE_SECONDS"))
+OPEN_METEO_URL = os.getenv("OPEN_METEO_URL", "https://api.open-meteo.com/v1/forecast")
+MAX_FORECAST_DISTANCE_SECONDS = int(os.getenv("MAX_FORECAST_DISTANCE_SECONDS", 1800))
 WEATHER_BATCH_SIZE = int(os.getenv(
-    "WEATHER_BATCH_SIZE"
+    "WEATHER_BATCH_SIZE",
+    50
 ))

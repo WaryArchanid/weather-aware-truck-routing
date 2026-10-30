@@ -32,7 +32,6 @@ def _nominatim_get(params):
             time.sleep(wait)
 
         try:
-            print(settings.NOMINATIM_USER_AGENT)
             response = requests.get(
                 NOMINATIM_URL,
                 params=params,
