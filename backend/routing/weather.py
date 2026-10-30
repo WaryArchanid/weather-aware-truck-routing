@@ -2,7 +2,9 @@ from datetime import datetime, timedelta, timezone
 import math
 from django.conf import settings
 import requests
+import logging
 
+logger = logging.getLogger(__name__)
 
 OPEN_METEO_URL = settings.OPEN_METEO_URL
 WEATHER_BATCH_SIZE = settings.WEATHER_BATCH_SIZE
@@ -195,13 +197,44 @@ def _fetch_weather_batch(checkpoints, start_date, end_date):
             "Open-Meteo timed out. Please try again."
         ) from exc
 
+    
     except requests.HTTPError as exc:
         response = exc.response
+
         status_code = (
             response.status_code
             if response is not None
             else "unknown"
         )
+
+        provider_reason = "No response details available."
+        retry_after = None
+
+        if response is not None:
+            retry_after = response.headers.get("Retry-After")
+
+            try:
+                payload = response.json()
+                provider_reason = payload.get(
+                    "reason",
+                    str(payload),
+                )
+            except ValueError:
+                provider_reason = response.text[:500]
+
+        logger.error(
+            "Open-Meteo HTTP failure | Status: %s | "
+            "Reason: %s | Retry-After: %s",
+            status_code,
+            provider_reason,
+            retry_after,
+        )
+
+        if status_code == 429:
+            raise WeatherProviderError(
+                "Weather provider is temporarily rate-limited. "
+                "Please try again later."
+            ) from exc
 
         raise WeatherProviderError(
             f"Open-Meteo returned HTTP {status_code}."
