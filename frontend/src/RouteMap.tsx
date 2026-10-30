@@ -233,13 +233,6 @@ function formatNumber(value: unknown, digits = 1): string {
   return number === null ? "—" : number.toFixed(digits);
 }
 
-function formatEta(checkpoint: AnyRecord): string {
-  const raw = checkpoint?.eta ?? checkpoint?.estimated_arrival_time ?? checkpoint?.arrival_time;
-  if (!raw) return "—";
-  const date = new Date(raw);
-  return Number.isNaN(date.getTime()) ? String(raw) : date.toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
-}
-
 function formatForecastTime(frame: AnyRecord | null, heatmap: AnyRecord | null | undefined, hour: number): string {
   const raw = frame?.valid_time ?? (heatmap?.reference_time ? new Date(new Date(heatmap.reference_time).getTime() + hour * 3_600_000).toISOString() : null);
   if (!raw) return `+${hour}h forecast`;
@@ -270,7 +263,7 @@ function FitRoutes({ routes }: { routes: AnyRecord[] }) {
       maxZoom: 8,
       animate: true,
     });
-  }, [map, routeSignature]);
+  }, [map, routeSignature, routes]);
 
   return null;
 }

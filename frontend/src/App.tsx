@@ -439,10 +439,6 @@ export default function App() {
           <h1>Weather Route</h1>
           <p>Weather-aware truck routing</p>
         </div>
-
-        <span className="status-pill">
-          Assessment prototype
-        </span>
       </header>
 
       <section className="intro">
@@ -877,7 +873,7 @@ export default function App() {
       </section>
 
       <footer className="footer">
-        Weather-aware truck routing · Full Stack Developer assessment
+        Weather-aware truck routing
       </footer>
     </main>
   );
