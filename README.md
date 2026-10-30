@@ -18,6 +18,15 @@ The application generates alternative driving routes, samples weather conditions
 - **Forecast timeline:** Inspect hourly weather snapshots from 0 to 48 hours.
 - **Error handling:** Handle invalid locations and external routing or weather provider failures.
 
+## Live Application
+
+| Resource | URL |
+|---|---|
+| **Frontend Application** | [Open Weather-Aware Truck Routing](https://weather-aware-truck-routing-six-omega.vercel.app/) |
+| **Backend API** | [Django Backend](https://weather-aware-truck-routing-ioup.onrender.com/) |
+| **Backend Health Check** | [API Health](https://weather-aware-truck-routing-ioup.onrender.com/api/health/) |
+| **GitHub Repository** | [View Source Code](https://github.com/WaryArchanid/weather-aware-truck-routing) |
+
 ## Technology Stack
 
 ### Frontend
@@ -403,6 +412,29 @@ weather-aware-truck-routing/
 - Continuous weather-grid visualization.
 - Additional forecast providers and fallback mechanisms.
 - Deployment monitoring and observability.
+
+
+## Deployment
+
+The application is deployed using:
+
+- **Frontend:** Vercel
+- **Backend:** Render
+
+### Production Environment Configuration
+
+The frontend communicates with the deployed Django backend using:
+
+```env
+VITE_API_BASE_URL=https://weather-aware-truck-routing-ioup.onrender.com
+```
+
+The backend allows requests from the deployed frontend domain through Django CORS configuration.
+
+Production API health can be checked at:
+
+https://weather-aware-truck-routing-ioup.onrender.com/api/health/
+
 
 ### Weather API Rate Limits
 
